@@ -87,6 +87,8 @@ def excute_cmd(cmd):
     # 根据输入构造命令
     command = Command(cmd)
 
+    print(command)
+
     # 如果是内置命令，则直接返回执行结果
     if command.cmd_name in builtin_cmds:
         return builtin_cmds[command.cmd_name](command)

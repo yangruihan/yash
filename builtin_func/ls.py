@@ -14,7 +14,28 @@ def ls(cmd):
     """
     显示目录
     """
-    file_list = os.listdir(os.getcwd())
+    result = []
+
+    if len(cmd.cmd_simple_args) > 0:
+        for file in cmd.cmd_simple_args:
+            if os.path.exists(file):
+                if os.path.isdir(file):
+                    temp_s = file + ":\n" + \
+                        _show_files_in_path(file, cmd) + '\n'
+                    result.append(temp_s)
+                elif os.path.isfile(file):
+                    result.append(file + '\n')
+            else:
+                result.append(r"ls: 无法访问'" + file + r"': 没有该文件或目录。" + '\n')
+    else:
+        result.append(_show_files_in_path(os.getcwd(), cmd))
+
+    print('\n'.join(result), end='')
+    return ShellStatus.RUN
+
+
+def _show_files_in_path(path, cmd):
+    file_list = os.listdir(path)
 
     if 'A' in cmd.cmd_options:
         file_list.append('.')
@@ -28,14 +49,9 @@ def ls(cmd):
             file_list[index] = CMD_COLOR_GREEN + \
                 file_list[index] + '/' + CMD_COLOR_DEFAULT
 
-    if len(cmd.cmd_simple_args) > 0:
-        file_list = list(filter(lambda x: x in cmd.cmd_simple_args, file_list))
-
     file_list.sort()
 
     if 'l' in cmd.cmd_options:
-        print('\n'.join(file_list))
+        return '\n'.join(file_list)
     else:
-        print('  '.join(file_list))
-
-    return ShellStatus.RUN
+        return '  '.join(file_list)
