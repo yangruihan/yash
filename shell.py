@@ -7,7 +7,6 @@ Shell 入口
 
 import sys
 import shlex
-from constants import *
 from builtin_func.common import *
 from builtin_func.ls import *
 

@@ -26,3 +26,11 @@ def cd(args):
         print('系统找不到指定的路径。')
 
     return ShellStatus.RUN
+
+
+def clear(args):
+    """
+    清空屏幕
+    """
+    os.system('cls')
+    return ShellStatus.RUN

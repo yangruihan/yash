@@ -1,8 +1,15 @@
 # Yash
-使用 Python 实现的 Shell。
+使用 Python 实现 Windows 上的 Shell。
+
+## DONE
+### 基本命令
+- 执行Windows自带命令
+- exit
+- cd
+- clear
+- ls
 
 ## TODO
-- clear 清屏
 - | 管道
 - 环境变量
 - 自动补齐
