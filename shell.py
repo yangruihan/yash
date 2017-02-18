@@ -6,7 +6,6 @@ Shell 入口
 """
 
 import sys
-import os
 import shlex
 from constants import *
 from builtin_func.common import *
@@ -76,6 +75,8 @@ def shell_init():
     builtin_cmds.clear()
 
     register_builtin_cmd('exit', exit)  # 注册退出命令
+    register_builtin_cmd('cd', cd)  # 注册切换目录命令
+    register_builtin_cmd('ls', ls)  # 显示当前目录文件命令
 
 
 def shell_loop():
@@ -93,6 +94,8 @@ def shell_loop():
 
         # 执行命令
         status = ShellStatus(excute_cmd(cmd))
+
+        print()
 
 
 def main():
