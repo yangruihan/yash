@@ -3,15 +3,20 @@
 
 ## DONE
 ### 基本命令
-- 执行Windows自带命令
-- exit
-- cd
-- clear
-- ls
-- find
+- 执行 Windows 自带命令
+- `exit`
+- `cd`
+- `clear`
+- `ls`
+- `find`
+- `echo`
+
+### 配置
+- 添加`.yashrc`运行时配置文件
+- 添加`.yash_history`历史命令记录文件
 
 ## TODO
-- | 管道
+- `|`管道
 - 环境变量
 - 自动补齐
 - 命令别名

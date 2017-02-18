@@ -6,30 +6,30 @@
 """
 
 import os
+from command import Command
 from constants import *
-import fnmatch
 
 
-def exit(args):
+def exit(cmd):
     """
     退出命令
     """
     return ShellStatus.STOP
 
 
-def cd(args):
+def cd(cmd):
     """
     切换目录
     """
     try:
-        os.chdir(args[0])
+        os.chdir(cmd.cmd_args[0])
     except FileNotFoundError as _:
         print('系统找不到指定的路径。')
 
     return ShellStatus.RUN
 
 
-def clear(args):
+def clear(cmd):
     """
     清空屏幕
     """
@@ -37,32 +37,9 @@ def clear(args):
     return ShellStatus.RUN
 
 
-def find(args):
+def echo(cmd):
     """
-    查找方法
+    输出用户的输入
     """
-    if len(args) <= 0:
-        print('请输入要查询的文件名，并且可添加查找路径。')
-        return ShellStatus.RUN
-    elif len(args) == 1:
-        file_name = args[0]
-        path = os.getcwd()
-    else:
-        file_name = args[0]
-        path = args[1]
-
-    results = []
-
-    try:
-        for root, dirs, files in os.walk(path):
-            for name in files:
-                if fnmatch.fnmatch(name, file_name):
-                    results.append(os.path.join(root, CMD_COLOR_RED + name + CMD_COLOR_DEFAULT))
-    except Exception as e:
-        print(e)
-        print('系统找不到指定的路径。')
-
-    for res in results:
-        print(res)
-
+    print(cmd.raw_args)
     return ShellStatus.RUN

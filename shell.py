@@ -7,8 +7,11 @@ Shell 入口
 
 import sys
 import shlex
+from command import Command
 from builtin_func.common import *
 from builtin_func.ls import *
+from builtin_func.find import *
+
 
 # HOME = os.getenv(key="HOME")
 HOME = os.getcwd()  # HOME 路径
@@ -74,18 +77,6 @@ def get_input():
     return sys.stdin.readline()
 
 
-def parse_cmd(cmd):
-    """
-    解析输入的命令
-    :param 命令字符串
-    :return: cmd_name, cmd_args
-        cmd_name: 命令名
-        cmd_args：命令参数
-    """
-    tokens = shlex.split(cmd)
-    return tokens[0], tokens[1:]
-
-
 def excute_cmd(cmd):
     """
     执行命令
@@ -93,14 +84,14 @@ def excute_cmd(cmd):
     :return: 执行结果
     """
 
-    # 解析命令名称和参数
-    cmd_name, cmd_args = parse_cmd(cmd)
+    # 根据输入构造命令
+    command = Command(cmd)
 
     # 如果是内置命令，则直接返回执行结果
-    if cmd_name in builtin_cmds:
-        return builtin_cmds[cmd_name](cmd_args)
+    if command.cmd_name in builtin_cmds:
+        return builtin_cmds[command.cmd_name](command)
     else:
-        os.system(cmd)
+        os.system(command.raw_cmd)
         return ShellStatus.RUN
 
 
