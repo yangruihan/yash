@@ -9,6 +9,7 @@ import sys
 import shlex
 from constants import *
 from builtin_func.common import *
+from builtin_func.ls import *
 
 builtin_cmds = {}  # 内置命令
 
@@ -65,7 +66,8 @@ def excute_cmd(cmd):
     if cmd_name in builtin_cmds:
         return builtin_cmds[cmd_name](cmd_args)
     else:
-        return os.system(cmd)
+        os.system(cmd)
+        return ShellStatus.RUN
 
 
 def shell_init():

@@ -26,30 +26,3 @@ def cd(args):
         print('系统找不到指定的路径。')
 
     return ShellStatus.RUN
-
-
-def ls(args):
-    """
-    显示目录
-    """
-    file_list = os.listdir(os.getcwd())
-
-    if '-A' in args:
-        file_list.append('.')
-        file_list.append('..')
-
-    if '-a' not in args and '-A' not in args:
-        file_list = list(filter(lambda x: not x.startswith('.'), file_list))
-
-    for index, file in enumerate(file_list):
-        if os.path.isdir(file):
-            file_list[index] += '/'
-
-    file_list.sort()
-
-    if '-l' in args:
-        print('  '.join(file_list))
-    else:
-        print('  '.join(file_list))
-
-    return ShellStatus.RUN
