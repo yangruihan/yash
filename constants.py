@@ -18,5 +18,6 @@ class ShellStatus(Enum):
 
 CMD_PROMPT = '%s\n'
 
-CMD_DIR_COLOR_GREEN = '\33[92m'
-CMD_DIR_COLOR_DEFAULT = '\33[0m'
+CMD_COLOR_RED = '\33[91m'
+CMD_COLOR_GREEN = '\33[92m'
+CMD_COLOR_DEFAULT = '\33[0m'

@@ -78,6 +78,7 @@ def shell_init():
     register_builtin_cmd('exit', exit)  # 注册退出命令
     register_builtin_cmd('cd', cd)  # 注册切换目录命令
     register_builtin_cmd('ls', ls)  # 显示当前目录文件命令
+    register_builtin_cmd('find', find)  # 查找文件
 
 
 def shell_loop():

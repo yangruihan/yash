@@ -8,9 +8,11 @@
 - cd
 - clear
 - ls
+- find
 
 ## TODO
 - | 管道
 - 环境变量
 - 自动补齐
 - 命令别名
+- 执行python代码

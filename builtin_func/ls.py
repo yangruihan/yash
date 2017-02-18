@@ -24,7 +24,7 @@ def ls(args):
 
     for index, file in enumerate(file_list):
         if os.path.isdir(file):  # 如果是目录，则改变输出颜色并且添加/标识
-            file_list[index] = CMD_DIR_COLOR_GREEN + file_list[index] + '/' + CMD_DIR_COLOR_DEFAULT
+            file_list[index] = CMD_COLOR_GREEN + file_list[index] + '/' + CMD_COLOR_DEFAULT
     file_list.sort()
 
     if '-l' in args:
