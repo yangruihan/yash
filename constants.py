@@ -24,3 +24,6 @@ CMD_COLOR_DEFAULT = '\33[0m'  # 命令行无样式
 
 RUNTIME_CONFIG_FILE_NAME = '.yashrc'  # 运行时配置文件名
 HISTORY_FILE_NAME = '.yash_history'  # 历史命令文件名
+
+CMD_RESULT_SUC = 0      # 命令运行成功
+CMD_RESULT_FAIL = 1     # 命令运行失败

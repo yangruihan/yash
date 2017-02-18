@@ -54,10 +54,11 @@ def register_builtin_cmds():
 
     builtin_cmds.clear()
 
-    register_builtin_cmd('exit', exit)  # 注册退出命令
-    register_builtin_cmd('cd', cd)  # 注册切换目录命令
-    register_builtin_cmd('ls', ls)  # 显示当前目录文件命令
-    register_builtin_cmd('find', find)  # 查找文件
+    register_builtin_cmd('exit', exit)      # 注册退出命令
+    register_builtin_cmd('cd', cd)          # 注册切换目录命令
+    register_builtin_cmd('clear', clear)    # 清空屏幕
+    register_builtin_cmd('ls', ls)          # 显示当前目录文件命令
+    register_builtin_cmd('find', find)      # 查找文件
 
 
 def show_cmd_prompt():
@@ -87,13 +88,19 @@ def excute_cmd(cmd):
     # 根据输入构造命令
     command = Command(cmd)
 
-    print(command)
+    # print(command)
 
     # 如果是内置命令，则直接返回执行结果
     if command.cmd_name in builtin_cmds:
         return builtin_cmds[command.cmd_name](command)
     else:
-        os.system(command.raw_cmd)
+        # 尝试用 python 解析
+        try:
+            eval(command.raw_cmd)
+        except Exception as _:
+            # 如果 python 解析失败，则尝试用系统内置命令执行
+            os.system(command.raw_cmd)
+
         return ShellStatus.RUN
 
 
