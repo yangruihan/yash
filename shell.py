@@ -11,16 +11,15 @@ from builtin_func.common import *
 from builtin_func.ls import *
 from builtin_func.find import *
 
-
-ENV = {}    # 环境
+ENV = {}  # 环境
 
 
 def init_env():
-    ENV['home'] = os.getcwd()       # HOME 路径
-    ENV['builtin_cmds'] = {}        # 内置命令
-    ENV['cmd_history'] = []         # 命令历史
+    ENV['home'] = os.getcwd()  # HOME 路径
+    ENV['builtin_cmds'] = {}  # 内置命令
+    ENV['cmd_history'] = []  # 命令历史
     ENV['cmd_history_file'] = None  # 记录命令历史的文件
-    ENV['pwd'] = os.getcwd()        # 当前路径
+    ENV['pwd'] = os.getcwd()  # 当前路径
 
 
 def init_runtime_config():
@@ -59,12 +58,12 @@ def register_builtin_cmds():
 
     ENV['builtin_cmds'].clear()
 
-    register_builtin_cmd('exit', exit)      # 注册退出命令
-    register_builtin_cmd('cd', cd)          # 注册切换目录命令
-    register_builtin_cmd('clear', clear)    # 清空屏幕
-    register_builtin_cmd('ls', ls)          # 显示当前目录文件命令
-    register_builtin_cmd('find', find)      # 查找文件
-    register_builtin_cmd('help', help)      # 帮助命令
+    register_builtin_cmd('exit', ExitFunc())  # 注册退出命令
+    register_builtin_cmd('cd', CdFunc())  # 注册切换目录命令
+    register_builtin_cmd('clear', ClearFunc())  # 清空屏幕
+    register_builtin_cmd('ls', LsFunc())  # 显示当前目录文件命令
+    register_builtin_cmd('find', FindFunc())  # 查找文件
+    register_builtin_cmd('help', HelpFunc())  # 帮助命令
 
 
 def show_cmd_prompt():
@@ -98,7 +97,7 @@ def excute_cmd(cmd):
 
     # 如果是内置命令，则直接返回执行结果
     if command.cmd_name in ENV['builtin_cmds']:
-        return ENV['builtin_cmds'][command.cmd_name](command)
+        return ENV['builtin_cmds'][command.cmd_name].execute(command)
     else:
         # 尝试用 python 解析
         try:

@@ -8,7 +8,7 @@
 import shlex
 
 
-class Command():
+class Command:
     """
     命令类
     """
