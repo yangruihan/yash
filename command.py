@@ -13,13 +13,15 @@ class Command():
     命令类
     """
 
-    def __init__(self, cmd):
+    def __init__(self, cmd, ENV):
         self.raw_cmd = cmd.strip()  # 原始命令
         self.cmd_name = ''          # 命令名称
         self.cmd_args = []          # 命令参数
         self.cmd_raw_args = ''      # 命令原始参数
         self.cmd_options = []       # 命令选项
         self.cmd_simple_args = []   # 命令纯参数
+
+        self.env = ENV              # 环境
 
         # 解析输入的命令
         self._parse()

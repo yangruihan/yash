@@ -28,7 +28,7 @@ def ls(cmd):
             else:
                 result.append(r"ls: 无法访问'" + file + r"': 没有该文件或目录。" + '\n')
     else:
-        result.append(_show_files_in_path(os.getcwd(), cmd))
+        result.append(_show_files_in_path(os.getcwd(), cmd) + '\n')
 
     print('\n'.join(result), end='')
     return ShellStatus.RUN

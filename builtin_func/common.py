@@ -23,6 +23,7 @@ def cd(cmd):
     """
     try:
         os.chdir(cmd.cmd_args[0])
+        cmd.env['pwd'] = os.getcwd()
     except FileNotFoundError as _:
         print('系统找不到指定的路径。')
 
@@ -42,4 +43,16 @@ def echo(cmd):
     输出用户的输入
     """
     print(cmd.raw_args)
+    return ShellStatus.RUN
+
+
+def help(cmd):
+    """
+    帮助命令
+    """
+    if len(cmd.cmd_args) == 0:
+        print('Builtin commands: ')
+        for cmd_name in cmd.env['builtin_cmds'].keys():
+            print('    %s' % cmd_name)
+
     return ShellStatus.RUN

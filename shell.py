@@ -6,25 +6,28 @@ Shell 入口
 """
 
 import sys
-import shlex
 from command import Command
 from builtin_func.common import *
 from builtin_func.ls import *
 from builtin_func.find import *
 
 
-# HOME = os.getenv(key="HOME")
-HOME = os.getcwd()  # HOME 路径
-builtin_cmds = {}  # 内置命令
-CMD_HISTORY = []  # 命令历史
-history_file = None  # 命令历史文件
+ENV = {}    # 环境
+
+
+def init_env():
+    ENV['home'] = os.getcwd()       # HOME 路径
+    ENV['builtin_cmds'] = {}        # 内置命令
+    ENV['cmd_history'] = []         # 命令历史
+    ENV['cmd_history_file'] = None  # 记录命令历史的文件
+    ENV['pwd'] = os.getcwd()        # 当前路径
 
 
 def init_runtime_config():
     """
     初始化运行时配置文件
     """
-    runrc_path = os.path.join(HOME, RUNTIME_CONFIG_FILE_NAME)
+    runrc_path = os.path.join(ENV['home'], RUNTIME_CONFIG_FILE_NAME)
     if not os.path.exists(runrc_path):
         f = open(runrc_path, 'w')
         f.close()
@@ -34,8 +37,10 @@ def init_history_file():
     """
     初始化历史命令文件
     """
-    history_path = os.path.join(HOME, HISTORY_FILE_NAME)
-    history_file = open(history_path, 'w+')
+    history_path = os.path.join(ENV['home'], HISTORY_FILE_NAME)
+    history_file = open(history_path, 'w+')  # 命令历史文件
+
+    ENV['cmd_history_file'] = history_file
 
 
 def register_builtin_cmd(name, func):
@@ -44,7 +49,7 @@ def register_builtin_cmd(name, func):
     :param name: 命令名
     :param func: 处理方法
     """
-    builtin_cmds[name] = func
+    ENV['builtin_cmds'][name] = func
 
 
 def register_builtin_cmds():
@@ -52,21 +57,22 @@ def register_builtin_cmds():
     注册内置命令
     """
 
-    builtin_cmds.clear()
+    ENV['builtin_cmds'].clear()
 
     register_builtin_cmd('exit', exit)      # 注册退出命令
     register_builtin_cmd('cd', cd)          # 注册切换目录命令
     register_builtin_cmd('clear', clear)    # 清空屏幕
     register_builtin_cmd('ls', ls)          # 显示当前目录文件命令
     register_builtin_cmd('find', find)      # 查找文件
+    register_builtin_cmd('help', help)      # 帮助命令
 
 
 def show_cmd_prompt():
     """
     显示命令提示符
     """
-    sys.stdout.write(CMD_PROMPT_STYLE % os.getcwd())
-    sys.stdout.write('> ')
+    sys.stdout.write(CMD_PROMPT_STYLE % ENV['pwd'])
+    sys.stdout.write('yash> ')
     sys.stdout.flush()
 
 
@@ -86,13 +92,13 @@ def excute_cmd(cmd):
     """
 
     # 根据输入构造命令
-    command = Command(cmd)
+    command = Command(cmd, ENV)
 
     # print(command)
 
     # 如果是内置命令，则直接返回执行结果
-    if command.cmd_name in builtin_cmds:
-        return builtin_cmds[command.cmd_name](command)
+    if command.cmd_name in ENV['builtin_cmds']:
+        return ENV['builtin_cmds'][command.cmd_name](command)
     else:
         # 尝试用 python 解析
         try:
@@ -108,6 +114,8 @@ def shell_init():
     """
     Shell 初始化
     """
+    # 初始化环境
+    init_env()
 
     # 初始化运行时配置文件
     init_runtime_config()
@@ -133,7 +141,7 @@ def shell_loop():
         cmd = get_input()
 
         # 记录输入的命令
-        CMD_HISTORY.append(cmd.strip())
+        ENV['cmd_history'].append(cmd.strip())
 
         # 执行命令
         status = ShellStatus(excute_cmd(cmd))
