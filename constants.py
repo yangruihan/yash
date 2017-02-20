@@ -27,3 +27,5 @@ HISTORY_FILE_NAME = '.yash_history'     # 历史命令文件名
 
 CMD_RESULT_SUC = 0      # 命令运行成功
 CMD_RESULT_FAIL = 1     # 命令运行失败
+
+DEBUG = True    # 是否进行调试

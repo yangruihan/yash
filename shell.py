@@ -10,6 +10,7 @@ from command import Command
 from builtin_func.common import *
 from builtin_func.ls import *
 from builtin_func.find import *
+from utils.file_helper import FileHelper
 
 ENV = {}  # 环境
 
@@ -28,8 +29,7 @@ def init_runtime_config():
     """
     runrc_path = os.path.join(ENV['home'], RUNTIME_CONFIG_FILE_NAME)
     if not os.path.exists(runrc_path):
-        f = open(runrc_path, 'w')
-        f.close()
+        FileHelper.create_empty_file(runrc_path)
 
 
 def init_history_file():
