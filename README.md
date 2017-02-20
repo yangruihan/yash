@@ -11,6 +11,7 @@
 - `find`
 - `echo`
 - `help`
+- `alias`
 
 ### 配置
 - 添加`.yashrc`运行时配置文件

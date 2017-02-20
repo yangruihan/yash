@@ -27,10 +27,21 @@ class FileHelper:
         return file_content
 
     @staticmethod
+    def write_file_from_string(filename, file_content, mode='w'):
+        if isinstance(file_content, str):
+            with open(filename, mode) as f:
+                f.write(file_content)
+                f.flush()
+        else:
+            if DEBUG:
+                print("FileHelper.write_file_from_list error: 传入参数不为str")
+
+    @staticmethod
     def write_file_from_list(filename, file_list, mode='w'):
         if isinstance(file_list, list):
             with open(filename, mode) as f:
                 f.write('\n'.join(file_list))
+                f.flush()
         else:
             if DEBUG:
                 print("FileHelper.write_file_from_list error: 传入参数不为list")
