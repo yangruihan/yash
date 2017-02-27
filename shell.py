@@ -156,16 +156,16 @@ def shell_loop():
         show_cmd_prompt()
 
         # 读入命令
-        cmd = get_input()
-
-        # 命令预处理
-        cmd = pre_handle_cmd(cmd)
+        STDIN = get_input()
 
         # 记录输入的命令
-        ENV['cmd_history'].append(cmd.strip())
+        ENV['cmd_history'].append(STDIN.strip())
+
+        # 命令预处理
+        pre_cmd = pre_handle_cmd(STDIN)
 
         # 执行命令
-        status = ShellStatus(excute_cmd(cmd))
+        status = ShellStatus(excute_cmd(pre_cmd))
 
         print()
 
